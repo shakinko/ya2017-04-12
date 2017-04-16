@@ -45,7 +45,6 @@ def fast_calc(events, interval):
             # включаем камеру
             res.append(event)
             stop = event + interval
-        # print (event)
     return res
 
 

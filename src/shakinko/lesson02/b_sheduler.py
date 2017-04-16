@@ -24,13 +24,11 @@ class Event:
 
 
 def calcStartTimes(events, begin, end):
-    # Ваше решение
     local_events = sorted(events, key = lambda event:event.stop)
-    # print (local_events)
     res = []
     t = begin
     for event in local_events:
-        # отобрать из всех событий те, которые не пересекаются
+        # события не пересекаются ?
         if event.start >= t and event.stop <= end:
             res.append(event)
             t = event.stop
