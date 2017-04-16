@@ -16,12 +16,37 @@ task='''
 
 def naive_calc(events, interval):
     # напишите "наивный" O(n^2) алгоритм вычисления времени запуска регистратора
-    return None
+    local_events = list(events)
+    res = []
+    while len(local_events) > 0:
+        # находим минимальное значение
+        start = min(local_events)
+        res.append(start)
+        stop = start + interval
+
+        i = len(local_events)
+        while i > 0:
+            i = i-1
+            # массив был 10, теперь указыв на 9
+            if local_events[i] <= stop:
+                local_events.pop(i)
+        print (events)
+    return res
 
 
 def fast_calc(events, interval):
     # напишите O(n log n) алгоритм вычисления времени запуска регистратора
-    return None
+    local_events = sorted(events)
+    res = []
+    stop = local_events[0] - interval
+
+    for event in local_events:
+        if event > stop:
+            # включаем камеру
+            res.append(event)
+            stop = event + interval
+        # print (event)
+    return res
 
 
 def main():

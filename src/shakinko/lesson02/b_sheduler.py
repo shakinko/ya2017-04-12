@@ -25,7 +25,16 @@ class Event:
 
 def calcStartTimes(events, begin, end):
     # Ваше решение
-    return None
+    local_events = sorted(events, key = lambda event:event.stop)
+    # print (local_events)
+    res = []
+    t = begin
+    for event in local_events:
+        # отобрать из всех событий те, которые не пересекаются
+        if event.start >= t and event.stop <= end:
+            res.append(event)
+            t = event.stop
+    return res
 
 def calcMaxCostMinBlank(items, W):
     # Повышенная сложность (необязательно, и не проверяется):
