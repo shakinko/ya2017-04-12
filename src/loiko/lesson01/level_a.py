@@ -21,27 +21,27 @@ def f_o1(n):
     return f
 
 
-# def a_01_naive_fibonachi_recursive(n):
-#     fun = a_01_naive_fibonachi_recursive
-#     assert n >= 0
-#     if n < 2:
-#         return n
-#     else:
-#         return fun(n - 2) + fun(n - 1)
+def a_01_naive_fibonachi_recursive(n):
+    fun = a_01_naive_fibonachi_recursive
+    assert n >= 0
+    if n < 2:
+        return n
+    else:
+        return fun(n - 2) + fun(n - 1)
 
 
-# cashe = {}
-# def a_02_cashed_fibonachi(n):
-#     fun = a_02_cashed_fibonachi
-#     assert n >= 0
-#     if cashe.get(n):
-#         return cashe.get(n)
-#     if n < 2:
-#         res = n
-#     else:
-#         res = fun(n - 2) + fun(n - 1)
-#     cashe.setdefault(n, res)
-#     return res
+cashe = {}
+def a_02_cashed_fibonachi(n):
+    fun = a_02_cashed_fibonachi
+    assert n >= 0
+    if cashe.get(n):
+        return cashe.get(n)
+    if n < 2:
+        res = n
+    else:
+        res = fun(n - 2) + fun(n - 1)
+    cashe.setdefault(n, res)
+    return res
 
 
 def a_03_iteration_fibonachi(n):
@@ -52,7 +52,7 @@ def a_03_iteration_fibonachi(n):
     else:
         for i in range(0,n):
             a, b = b + a, a
-    return a
+        return a
 
 
 def main():
@@ -60,8 +60,8 @@ def main():
     tmpl = "a_01_naive_fibonachi_recursive result={}\n" \
            + "a_02_cashed_fibonachi result={}\n" \
            + "a_03_iteration_fibonachi result={}\n"
-    s = tmpl.format(str(0),
-                    str(0),
+    s = tmpl.format(str(a_01_naive_fibonachi_recursive(n)),
+                    str(a_02_cashed_fibonachi(n)),
                     str(a_03_iteration_fibonachi(n))
                     )
     print(s)

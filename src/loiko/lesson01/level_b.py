@@ -14,26 +14,27 @@ Level B. Вам Необходимо реализовать 2 способа д�
 '''
 
 
-# def b_01_naive_gsd(a, b):
-#     if (a+b) == 0:
-#         return 0
-#     a = abs(a)
-#     b = abs(b)
-#     res = 1
-#     for i in range(1, min(a,b)+1):
-#         if a%i == 0 and b%i == 0:
-#             res = i
-#     return res
+def b_01_naive_gsd(a, b):
+    if (a+b) == 0:
+        return 0
+    a = abs(a)
+    b = abs(b)
+    res = 1
+    for i in range(1, min(a,b)+1):
+        if a%i == 0 and b%i == 0:
+            res = i
+    return res
 
 def b_02_fast_gsd(a, b):
+    fun = b_02_fast_gsd
     if a == 0:
-        return b
+        return abs(b)
     elif b == 0:
-        return a
+        return abs(a)
     elif a>b:
-        return a%b
+        return abs(fun(a%b, b))
     else:
-        return b%a
+        return abs(fun(a, b%a))
 
 
 
