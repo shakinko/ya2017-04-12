@@ -22,18 +22,32 @@ def f_o1(n):
 
 
 def a_01_naive_fibonachi_recursive(n):
-    #ваше решение
-    return None
+    fun = a_01_naive_fibonachi_recursive
+    assert n >= 0
+    if n < 2:
+        return n
+    else:
+        return fun(n - 2) + fun(n - 1)
 
 
 def a_02_cashed_fibonachi(n):
-    #ваше решение
-    return None
+    cashe = [0, 1]
+    assert n >= 0
+    for i in range(2, n + 1):
+        cashe.append(cashe[i - 1] + cashe[i - 2])
+    return cashe[n]
 
 
 def a_03_iteration_fibonachi(n):
-    #ваше решение
-    return None
+    assert n >= 0
+    a, b = 0, 1
+    if n < 2:
+        return n
+    else:
+        for i in range(0, n):
+            a, b = b + a, a
+        return a
+
 
 
 def main():

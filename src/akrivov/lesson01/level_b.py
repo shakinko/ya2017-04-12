@@ -15,13 +15,25 @@ Level B. Вам Необходимо реализовать 2 способа д�
 
 
 def b_01_naive_gsd(a, b):
-    #ваше решение
-    return None
+    dcg = 1
+    if not a and not b:
+        dcg = 0
+    for d in range(2, max(a, b) + 1):
+        if not a % d and not b % d:
+            dcg = d
+    return dcg
 
 
 def b_02_fast_gsd(a, b):
-    #ваше решение
-    return None
+    if a == 0:
+        return b
+    if b == 0:
+        return abs(a)
+    if a >= abs(b):
+        return b_02_fast_gsd(a % b, b)
+    if b >= a:
+        return b_02_fast_gsd(a, b % a)
+
 
 
 def main():

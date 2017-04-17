@@ -15,15 +15,29 @@ task='''
 
 
 def naive_calc(events, interval):
-    # напишите "наивный" O(n^2) алгоритм вычисления времени запуска регистратора
-
-    return
+    local_events = list(events)
+    res = []
+    while local_events:
+        start = min(local_events)
+        res.append(start)
+        stop = start + interval
+        i = len(local_events)
+        while i > 0:
+            i = i - 1
+            if local_events[i] <= stop:
+                local_events.pop(i)
+    return res
 
 
 def fast_calc(events, interval):
-    # напишите O(n log n) алгоритм вычисления времени запуска регистратора
-
-    return
+    local_events = sorted(events)
+    res = []
+    stop = local_events[0] - interval
+    for event in local_events:
+        if event > stop:
+            res.append(event)
+            stop = event + interval
+    return res
 
 
 def main():

@@ -24,10 +24,15 @@ class Event:
 
 
 def calcStartTimes(events, begin, end):
-    # Ваше решение
+    local_events = sorted(events, key = lambda event:event.stop)
+    res = []
+    t = begin
+    for event in local_events:
+        if event.start >= t and event.stop <= end:
+            res.append(event)
+            t = event.stop
+    return res
 
-
-    return
 
 def calcMaxCostMinBlank(items, W):
     # Повышенная сложность (необязательно, и не проверяется):
