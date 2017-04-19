@@ -35,6 +35,7 @@ def main():
     size = int(f.readline().replace("\n", ""))
     strings = f.readline().replace("\n", "").split(" ")
     array = list(map(int, strings))
+    assert size==len(array)
     print(" array=", array)
     inv=inv_counter(array).inv
     print(" inv=", inv)
