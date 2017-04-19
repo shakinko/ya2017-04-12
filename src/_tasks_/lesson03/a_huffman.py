@@ -45,6 +45,8 @@ class Node:
     # а только через его версии InternalNode и LeafNode
     def __init__(self, frequence):  # конструктор по умолчанию
         self.frequence = frequence  # частота символов
+        self.symbol = None  # FIX символ нужен для лексикографической
+        # сортировки при равенстве частот
 
     # генерация кодов (вызывается на корневом узле
     # вызывается один раз в конце, т.е.после построения дерева)
@@ -55,7 +57,10 @@ class Node:
 
     # компаратор узлов по частоте (нужен для heapq)
     def __lt__(self, other):
-        return self.frequence < other.frequence
+        if self.frequence != other.frequence:
+            return self.frequence < other.frequence
+        else:
+            return self.symbol > other.symbol  # FIX
 
 
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
@@ -68,6 +73,7 @@ class InternalNode(Node):
         super().__init__(left.frequence + right.frequence)
         self.left = left  # левый ребенок бинарного дерева
         self.right = right  # правый ребенок бинарного дерева
+        self.symbol = left.symbol  # копируем символ из левого листа (для корректной сортировки)
 
     def __repr__(self):
         return repr(("-", self.frequence))
@@ -83,7 +89,8 @@ class InternalNode(Node):
 class LeafNode(Node):
     def __init__(self, symbol, frequence):
         super().__init__(frequence)
-        self.symbol = symbol  # символы хранятся только в листах
+        self.symbol = symbol    # символы хранятся в листах и дублируются
+                                # в вершины для лексикографической сортировки
 
     # добрались до листа, значит рекурсия закончена, код уже готов
     # и можно запомнить его в индексе для поиска кода по символу.
@@ -93,15 +100,9 @@ class LeafNode(Node):
     def __repr__(self):
         return repr((self.symbol, self.frequence))
 
-    # компаратор листьев (нужен для heapq)
-    def __lt__(self, other):
-        if self.frequence == other.frequence:
-            print(self.symbol , other.symbol, self.symbol > other.symbol)
-            return self.symbol > other.symbol
-        return super().__lt__(other)
 
-#очередь, выделена в отдельный
-#класс для удобного использования
+# очередь, выделена в отдельный
+# класс для удобного использования
 
 class Heap():
     def __init__(self) -> None:

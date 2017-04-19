@@ -12,7 +12,7 @@ class Run(TestCase):
     def test_A(self):
         fn=os.path.dirname(os.path.abspath(__file__))+"/dataHuffman.txt"
         res = encode(fn)
-        self.assertEqual(res, "01001110100110")
+        self.assertEqual(res, "01001100100111")
 
     # Уровень B
     def test_B(self):
