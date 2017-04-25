@@ -23,11 +23,20 @@ task='''
 
 
 def binaryFind(array, value):
-    index=None
-    # ваше решение
-
-
-    return index
+    l = 1
+    r = len(array)
+    while l <= r:
+        m = (l + r) // 2
+        index = array[m-1]
+        if value == index:
+            return m
+        elif value < index:
+            r = m - 1
+        elif value > index:
+            l = m + 1
+        else:
+            return -1
+    return -1
 
 
 def main():
