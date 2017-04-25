@@ -32,10 +32,8 @@ def binaryFind(array, value):
             return m
         elif value < index:
             r = m - 1
-        elif value > index:
-            l = m + 1
         else:
-            return -1
+            l = m + 1
     return -1
 
 
