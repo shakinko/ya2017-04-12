@@ -20,8 +20,8 @@ def merge(lm, lr):
     l = 0
     r = 0
     res = []
-    while (l + r) <= (len(lm) + len(lr)):
-        if r >= len(lr) or (l >= len(lm) and lm[l] <= lr[r]):
+    while (l + r) < (len(lm) + len(lr)):
+        if r >= len(lr) or (l < len(lm) and lm[l] <= lr[r]):
             res.append(lm[l])
             l += 1
         else:
