@@ -3,6 +3,7 @@ from .a_videoregistrator import naive_calc, fast_calc
 from .b_sheduler import Event, calcStartTimes
 from .c_knapsack import Item, calcMaxCost
 
+
 #############################################################################################
 #   Для тестов нажмите Ctrl+Shift+F10 установив курсор на  Run (или создайте конфигурацию)  #
 #############################################################################################
@@ -52,10 +53,10 @@ class Run(TestCase):
             Item(100, 50)
         ]
 
-        data=[
+        data = [
             (0, 0.0),
             (10, 40.0),
-            (20 ,80.0),
+            (20, 80.0),
             (30, 120.0),
             (40, 150.0),
             (50, 180.0),
@@ -66,4 +67,4 @@ class Run(TestCase):
         ]
         for inp in data:
             fullCost = calcMaxCost(items, inp[0])
-            self.assertEqual(fullCost,inp[1])
+            self.assertEqual(fullCost, inp[1])
