@@ -25,22 +25,27 @@ task = '''
 '''
 
 Cam = collections.namedtuple("Cam", {"start": 0, "stop": 0})
-Event = collections.namedtuple("Event", {"time": 0, "cams": 0},rename=True)
+Event = collections.namedtuple("Event", {"time": 0, "cams": 0}, rename=True)
+
 
 def my_qsort3(a):
     pass
+
 
 def fill_events_from_cams_quick3(cams, events):
     # тут напишите ваше решение,
     # для сортировки разрешается использовать только свой метод my_qsort3
     # events - нужно обновить (т.е. функция ничего не возвращает по return)
     pass
+    # !!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
+
 
 def main():
     # чтение одной строки чисел из файла
     def arr(filename):
         str = filename.readline().replace("\n", "").split(" ")
         return list(map(int, str))
+
     f = open("dataC.txt")
     cam_count, event_count = arr(f)
     cams = list()
@@ -52,12 +57,11 @@ def main():
     events_data = arr(f)
     assert len(events_data) == event_count
     for t in events_data:
-        events.append(Event(t,-999))
+        events.append(Event(t, -999))
     f.close()
     fill_events_from_cams_quick3(cams, events)
     for e in events:
-        print(e.cams,end=" ")
-
+        print(e.cams, end=" ")
 
 
 # Для ручной проверки нажмите Ctrl+Shift+F10

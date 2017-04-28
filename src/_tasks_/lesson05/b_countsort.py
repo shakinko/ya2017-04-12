@@ -14,6 +14,7 @@ def countSort(inarray):
     pass
     # !!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
+
 def main():
     # подготовка к чтению данных
     f = open("dataB.txt")
@@ -21,12 +22,14 @@ def main():
     def arr(filename):
         str = filename.readline().replace("\n", "").split(" ")
         return list(map(int, str))
+
     count = arr(f)[0]
     array = arr(f)
     f.close()
     assert count == len(array)
     print(countSort(array))
     print(sorted(array))
+
 
 # Для ручной проверки нажмите Ctrl+Shift+F10
 # установив курсор на  main
