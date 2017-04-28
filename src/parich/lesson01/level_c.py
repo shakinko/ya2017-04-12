@@ -18,7 +18,11 @@ Level C. Вам Необходимо реализовать 2 задачи
 
 
 def c_01_last_digit_fibo(n):
+<<<<<<< HEAD
 
+=======
+    #ваше решение
+>>>>>>> origin/master
     return None
 
 
