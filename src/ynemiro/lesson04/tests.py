@@ -1,9 +1,9 @@
 import random
 from unittest import TestCase
 
-from .a_binary_find import binaryFind
-from .b_mergesort import mergeSort
-from .c_inversions import inv_counter
+from a_binary_find import binaryFind
+from b_mergesort import mergeSort
+from c_inversions import inv_counter
 
 
 #############################################################################################
