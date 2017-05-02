@@ -39,14 +39,30 @@ task = '''
 Cam = collections.namedtuple("Cam", {"start": 0, "stop": 0})
 Event = collections.namedtuple("Event", {"time": 0, "cams": 0}, rename=True)
 
-
 def my_qsort(a):
-    # return sorted(a)  # временно
-    return a.sort()
+    def partition(a, l, r):
+        x = a[l]
+        j = l
+
+        for i in range(l + 1, r):
+            if a[i] <= x:
+                j += 1
+                a[j], a[i] = a[i], a[j]
+
+        a[l], a[j] = a[j], a[l]
+        return j
+
+    def quick_sort(a, l=0, r=len(a)):
+        if l >= r:
+            return
+        m = partition(a, l, r)
+        # quick_sort(a, l, m - 1) # такой оптимизированный способ, когда m-й элемент считаем уже отсортированным
+        quick_sort(a, l, m)  # так работает
+        quick_sort(a, m + 1, r)
+    return quick_sort(a)
+
 
 def fill_events_from_cams(cams, events):
-    # тут напишите ваше решение,
-    # для сортировки разрешается использовать только свой метод my_qsort
     # events - нужно обновить (т.е. функция ничего не возвращает по return)
     Point = collections.namedtuple("Point", {"time": 0, "type": 0})
     points = list()
@@ -55,9 +71,8 @@ def fill_events_from_cams(cams, events):
         points.append(Point(time=cam.stop, type=1))
     for event in events:
         points.append(Point(time=event.time, type=0))
-    points.sort()
-    # for p in points:
-    #    print(p)
+
+    my_qsort(points)
     onCam = 0
     d = dict()
     for p in points:
