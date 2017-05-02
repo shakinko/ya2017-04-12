@@ -5,9 +5,9 @@ from src.shakinko.lesson03.a_huffman import encode
 from src.shakinko.lesson03.b_huffman import decode
 from src.shakinko.lesson03.c_heapmax import MaxHeap
 """
-from .a_huffman import encode
-from .b_huffman import decode
-from .c_heapmax import MaxHeap
+from a_huffman import encode
+from b_huffman import decode
+from c_heapmax import MaxHeap
 
 #############################################################################################
 #   Для тестов нажмите Ctrl+Shift+F10 установив курсор на  Run (или создайте конфигурацию)  #
