@@ -1,7 +1,7 @@
 from unittest import TestCase
-from .a_videoregistrator import naive_calc, fast_calc
-from .b_sheduler import Event, calcStartTimes
-from .c_knapsack import Item, calcMaxCost
+from a_videoregistrator import naive_calc, fast_calc
+from b_sheduler import Event, calcStartTimes
+from c_knapsack import Item, calcMaxCost
 
 
 #############################################################################################
