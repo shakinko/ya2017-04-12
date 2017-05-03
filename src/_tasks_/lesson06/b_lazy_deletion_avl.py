@@ -49,9 +49,7 @@ class AvlB():
         pass
 
     def lookup(self, key):
-        o = self._lookup(self.root, key)
-        if o:
-            return o
+        return self._lookup(self.root, key)
 
     def _free(self, tree):
         pass
@@ -115,7 +113,7 @@ class AvlB():
         return out
 
 
-# ----------------------------------ПРОВЕРКА РАБОТОСПОСОБНОСТИ #########################
+# ------------------------ПРОВЕРКА РАБОТОСПОСОБНОСТИ -------------------------
 def main():
     # чтение одной строки из файла
     def arr(filename):
