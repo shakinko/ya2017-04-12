@@ -99,34 +99,36 @@ class AvlA():
         return tree.height if tree else -1
 
     def _add(self, tree, key, value):
+        pass
         if not tree:
             self.root = self._create(key, value)
             return self.root
         if (key < tree.key):
             tree.left = self._add(tree.left, key, value)
             if self._height(tree.left) - self._height(tree.right) == 2:
-                if key < tree.key:
-                    self._right_rotate(tree)
+                if key < tree.left.key:
+                    tree = self._right_rotate(tree)
                 else:
-                    self._leftright_rotate(tree)
+                    tree = self._leftright_rotate(tree)
         elif (key > tree.key):
             tree.right = self._add(tree.right, key, value)
             if self._height(tree.right) - self._height(tree.left) == 2:
-                if key > tree.key:
-                    self._left_rotate(tree)
+                if key > tree.right.key:
+                    tree = self._left_rotate(tree)
                 else:
-                    self._rightleft_rotate(tree)
+                    tree = self._rightleft_rotate(tree)
         else:
             tree.value = value
         tree.height = max(self._height(tree.left), self._height(tree.right)) + 1
         return tree
+
 
     def _right_rotate(self, tree):
         root = tree.left
         tree.left = root.right
         root.right = tree
         tree.height = max(self._height(tree.left), self._height(tree.right)) + 1
-        root.height = max(self._height(root.left), tree.heght) + 1
+        root.height = max(self._height(root.left), tree.height) + 1
         return root
 
     def _left_rotate(self, tree):
@@ -138,12 +140,13 @@ class AvlA():
         return root
 
     def _leftright_rotate(self, tree):
-        tree.left = self._left_rotate(tree)
+        tree.left = self._left_rotate(tree.left)
         return self._right_rotate(tree)
 
     def _rightleft_rotate(self, tree):
-        tree.right = self._right_rotate(tree)
+        tree.right = self._right_rotate(tree.right)
         return self._left_rotate(tree)
+
 
     # обновление массива для строкового представления дерева
     def _dfs_print(self, tree, level):
