@@ -1,4 +1,5 @@
 import collections
+import random
 
 task = '''
 Видеорегистраторы и площадь (нужно реализовать qsort3).
@@ -29,13 +30,61 @@ Event = collections.namedtuple("Event", {"time": 0, "cams": 0}, rename=True)
 
 
 def my_qsort3(a):
-    pass
+    def partition(a, l, r):
+        # случайная опорная точка
+        x = random.randint(l, r - 1)
+
+        j = l + 1
+        a[l], a[x] = a[x], a[l]
+
+        for i in range(l + 1, r):
+            if a[i] < a[l]:
+                a[i], a[j] = a[j], a[i]
+                j += 1
+
+        a[l], a[j - 1] = a[j - 1], a[l]
+        return j
+
+    def quick_sort(a, l=0, r=len(a)):
+        while l < r:
+            m = partition(a, l, r)
+            # m-l сравним с r-m
+            if (m-l)<(r-m):
+                quick_sort(a, l, m-1)
+                l = m + 1
+            else:
+                quick_sort(a, m, r)
+                r = m - 1
+
+    return quick_sort(a)
 
 
 def fill_events_from_cams_quick3(cams, events):
-    # тут напишите ваше решение,
-    # для сортировки разрешается использовать только свой метод my_qsort3
     # events - нужно обновить (т.е. функция ничего не возвращает по return)
+    Point = collections.namedtuple("Point", {"time": 0, "type": 0})
+    points = list()
+    for cam in cams:
+        points.append(Point(time=cam.start, type=-1))
+        points.append(Point(time=cam.stop, type=1))
+    for event in events:
+        points.append(Point(time=event.time, type=0))
+
+    tst = [1, 10, 2, 11, 0, 77, 5]
+    my_qsort3(tst)
+    print (tst)
+
+    my_qsort3(points)
+    onCam = 0
+    d = dict()
+    for p in points:
+        if p.type == 0:
+            d.update({p.time: onCam})
+        else:
+            onCam -= p.type
+    for i in range(0, len(events)):
+        t = events[i].time
+        onCam = d.get(events[i].time)
+        events[i] = Event(t, onCam)
     pass
     # !!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
