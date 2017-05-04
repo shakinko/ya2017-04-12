@@ -30,33 +30,37 @@ Event = collections.namedtuple("Event", {"time": 0, "cams": 0}, rename=True)
 
 
 def my_qsort3(a):
-    def partition(a, l, r):
-        # случайная опорная точка
-        x = random.randint(l, r - 1)
+    def partition3(a, l, r):
+        x, j, t = a[l], l, r
+        i = j
 
-        j = l + 1
-        a[l], a[x] = a[x], a[l]
+        while i <= t:
+            if a[i] < x:
+                a[j], a[i] = a[i], a[j]   # элемент пошел в левую часть
+                j += 1                    # пр. граница левой части сдвинулась вперед
 
-        for i in range(l + 1, r):
-            if a[i] < a[l]:
-                a[i], a[j] = a[j], a[i]
-                j += 1
+            elif a[i] > x:
+                a[t], a[i] = a[i], a[t]   # элемент пошел в правую часть
+                i -= 1                    # корректируем i, чтобы не перепрыгивать через обновленный на предыдущ. шаге a[i]
+                t -= 1                    # лев. граница правой части сдвинулась назад
+            i += 1
+        return j, t
 
-        a[l], a[j - 1] = a[j - 1], a[l]
-        return j
+    def q_sort3(a, l, r):
+        while l < r:                      # цикл вместо if для элиминации хвостовой рекурсии
+            k = random.randint(l, r)      # случайный опорный элемент
+            a[l], a[k] = a[k], a[l]       # этот элемент становится слева, от его значения зависит работа partition3
+            m1, m2 = partition3(a, l, r)  # делим массив на 3 части
 
-    def quick_sort(a, l=0, r=len(a)):
-        while l < r:
-            m = partition(a, l, r)
-            # m-l сравним с r-m
-            if (m-l)<(r-m):
-                quick_sort(a, l, m-1)
-                l = m + 1
+            if m1 - l < r - m2:
+                q_sort3(a, l, m1 - 1)     # в рекурсию идет меньшая часть массива (левая)
+                l = m1 + 1                # ОК, отсортировали часть массива. Двигаем границу в начало неотсортированной части
+
             else:
-                quick_sort(a, m, r)
-                r = m - 1
+                q_sort3(a, m2 + 1, r)     # или в рекурсию идет опять же меньшая часть массива (правая)
+                r = m2 - 1                # ОК, отсортировали часть массива. Двигаем границу в конец неотсортированной части
 
-    return quick_sort(a)
+    return q_sort3(a, 0, len(a)-1)
 
 
 def fill_events_from_cams_quick3(cams, events):
@@ -68,10 +72,6 @@ def fill_events_from_cams_quick3(cams, events):
         points.append(Point(time=cam.stop, type=1))
     for event in events:
         points.append(Point(time=event.time, type=0))
-
-    tst = [1, 10, 2, 11, 0, 77, 5]
-    my_qsort3(tst)
-    print (tst)
 
     my_qsort3(points)
     onCam = 0
@@ -118,3 +118,17 @@ def main():
 # или создайте конфигурацию Run-Edit configuration
 if __name__ == "__main__":
     main()
+
+"""
+    def q_sort3(a, l, r):
+        if l >= r:
+            return
+        k = random.randint(l, r)
+        a[l], a[k] = a[k], a[l]
+        m1, m2 = partition3(a, l, r)
+        # какая часть массива меньше: (m1-l-1) или (r-m2-1)?
+        
+        q_sort3(a, l, m1 - 1)
+        q_sort3(a, m2 + 1, r)
+
+"""
