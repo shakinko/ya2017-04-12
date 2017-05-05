@@ -1,8 +1,8 @@
 import os
 from unittest import TestCase
-from a_huffman import encode
-from b_huffman import decode
-from c_heapmax import MaxHeap
+from .a_huffman import encode
+from .b_huffman import decode
+from .c_heapmax import MaxHeap
 
 
 #############################################################################################
