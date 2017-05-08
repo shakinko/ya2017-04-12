@@ -99,7 +99,6 @@ class AvlA():
         return tree.height if tree else -1
 
     def _add(self, tree, key, value):
-        pass
         if not tree:
             self.root = self._create(key, value)
             return self.root
