@@ -169,7 +169,7 @@ def encode(filename):
         res = res + codes.get(ch)
     return res
 
-encode("F:\python\ya2017-04-12\src\moskalenko\lesson03\dataHuffman.txt")
+# encode("F:\python\ya2017-04-12\src\moskalenko\lesson03\dataHuffman.txt")
 
 # !!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 

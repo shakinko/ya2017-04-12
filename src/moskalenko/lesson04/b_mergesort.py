@@ -16,11 +16,29 @@ Sample Output:
 '''
 
 
-def mergeSort(m):
-    # ваше решение
+def merge(left, right):
+    i = 0
+    j = 0
+    res = list()
 
+    for k in range(0, (len(left) + len(right)) - 1):
+        if left[i] > right[j]:
+            res.append(right[j])
+            j+=1
+        else:
+            res.append(left[i])
+            i+=1
+    return res
 
-    return
+# def mergeSort(m):
+#     # ваше решение
+#     if (len(m)<2):
+#         return m
+#     c=len(m)//2
+#     left=mergeSort(m[:c])
+#     right=mergeSort(m[c:])
+#     return merge(left,right)
+
 
 
 def main():
