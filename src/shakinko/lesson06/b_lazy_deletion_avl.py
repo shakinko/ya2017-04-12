@@ -16,7 +16,7 @@ class AvlB():
             self.left = None
             self.right = None
             self.height = 0
-            # С каждым узлом ассоциирован флаг deleted
+            # Флаг deleted означает, что узел удален
             self.deleted = False
 
         def balance(self):
@@ -24,10 +24,12 @@ class AvlB():
                 self.right.height if self.right else -1)
 
         def __str__(self):
-            return str(self.key)
+            # когда мы удалим не ровно половину узлов, а больше либо меньше
+            # то лениво-удаленные узлы будем отображать в скобках
+            return "("+str(self.key)+")" if self.deleted else str(self.key)
 
     def __init__(self, root=None):
-        self.root = self.copy_tree = root  # 2 корня, тот, который copy нужен для lazy deletion
+        self.root = self.copy_tree = root  # корень
         self._outlist = list()  # вспомогательный лист в котором строится дерево для вывода его на экран
         # for lazy deletion
         self.nodecount = 0
@@ -40,43 +42,36 @@ class AvlB():
 
     def add(self, key, value):
         self.root = self._add(self.root, key, value)
+        self.nodecount += 1
 
     def delete(self, key):
-        # ищем узел
-        self.lookup(key)
-        # и просто включаем ему флаг deleted
-        # print(t)
-        self.deleted = True
+        del_tree = self.lookup(key)
+        del_tree.deleted = True
         self.delcount += 1
 
-        # коэффициент обновления = 0.5 хардкодим прямо здесь
-        # по-хорошему его надо бы вынести в константы
+        # коэффициент обновления у нас 0.5
         if self.nodecount * 0.5 <= self.delcount:
-            # создаем новое дерево, содержащее все не удалённые узлы
-            self.copy(self.root)
-            # print(self.copy_tree)
-            self.root = self.copy_tree       # копия встает на место оригинала
-            self.nodecount -= self.delcount  # счетчик узлов уменьшился на кол-во удаленных узлов
-            self.copy_tree = None            # уничтожаем копию
-            self.delcount = 0
+            self.copy(self.root)             # копируем все неудаленные узлы в новое дерево
+            self.root = self.copy_tree       # новое дерево становится на место прежнего
+            self.nodecount -= self.delcount  # узлов стало меньше
+            self.delcount = 0                # удаленных вообще не осталось
+            self.copy_tree = None            # копию очищаем; если не очищать, то при следующем копировании будет ошибка
 
     def copy(self, node):
         if node:
             if not node.deleted:
                 self.copy_tree = self._add(self.copy_tree, node.key, node.value)
-                # print("key =", node.key)
 
             if node.left and not node.left.deleted:
                 self.copy_tree = self._add(self.copy_tree, node.left.key, node.left.value)
-                # print("left.key =", node.left.key)
 
             elif node.right and not node.right.deleted:
                 self.copy_tree = self._add(self.copy_tree, node.right.key, node.right.value)
-                # print("right.key =", node.right.key)
 
-        # рекурсивно спускаемся по дереву и продолжаем копировать
+            # рекурсивно спускаемся по дереву
             self.copy(node.left)
             self.copy(node.right)
+
 
     def lookup(self, key):
         return self._lookup(self.root, key)
@@ -85,8 +80,6 @@ class AvlB():
         if tree:
             self._free(tree.left)
             self._free(tree.right)
-            self.nodecount = 0
-            self.delcount = 0
             tree = None
 
     def _lookup(self, tree, key):
@@ -108,30 +101,27 @@ class AvlB():
     def _add(self, tree, key, value):
         if not tree:
             self.root = self._create(key, value)
-            # Инкрементим счетчик, это нужно будет потом для lazy deletion
-            self.nodecount += 1
             return self.root
-        if (key < tree.key):
+        if key < tree.key:
             tree.left = self._add(tree.left, key, value)
             if self._height(tree.left) - self._height(tree.right) == 2:
                 if key < tree.left.key:
                     tree = self._right_rotate(tree)
                 else:
                     tree = self._leftright_rotate(tree)
-        elif (key > tree.key):
+        elif key > tree.key:
             tree.right = self._add(tree.right, key, value)
             if self._height(tree.right) - self._height(tree.left) == 2:
                 if key > tree.right.key:
                     tree = self._left_rotate(tree)
                 else:
                     tree = self._rightleft_rotate(tree)
-
-        else:
+        else:                           # ключ совпал, но это может быть и лениво-удаленный узел
             if tree.deleted:
-                tree.deleted = False
+                tree.deleted = False    # тогда узел становится не удаленным
                 self.delcount -= 1
             else:
-                tree.value = value
+                tree.value = value      # ключ совпал и узел не удаленный, тогда все просто
         tree.height = max(self._height(tree.left), self._height(tree.right)) + 1
         return tree
 
@@ -188,9 +178,9 @@ class AvlB():
             subspaces = " " * (len(spaces) - 1)
             while (len(line) > max):
                 line = line.replace(spaces, subspaces, 1)
-            if len(line.replace(".","").replace(" ",""))>0:
+            if len(line.replace(".", "").replace(" ", "")) > 0:
                 out += line + "\n"
-        out += "-"*max
+        out += "-" * max
         return out
 
 
@@ -199,10 +189,11 @@ def main():
     # чтение одной строки из файла
     def arr(filename):
         return filename.readline().replace("\n", "").split(" ")
+
     f = open("dataB.txt")
     count = int(arr(f)[0])
     avl = AvlB()
-    keys=list()
+    keys = list()
     for i in range(0, count):
         data = arr(f)
         assert len(data) == 2
@@ -210,7 +201,7 @@ def main():
         keys.append(data[0])
     print(avl)
     print("Удаление половины узлов")
-    for i in range(count//2, count):
+    for i in range(count // 2, count):
         avl.delete(keys[i])
     print(avl)
 
