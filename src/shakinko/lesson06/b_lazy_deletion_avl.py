@@ -57,7 +57,6 @@ class AvlB():
         if self.nodecount * 0.5 <= self.delcount:
             # создаем новое дерево, содержащее все не удалённые узлы
             self.copy(self.root)
-#            self.root = self.copy_tree
 
     def copy(self, node):
         if node:
