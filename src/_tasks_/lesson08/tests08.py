@@ -91,3 +91,4 @@ class Run(TestCase):
         # String 7 & 8
         testSolve(f)
         f.close()
+
