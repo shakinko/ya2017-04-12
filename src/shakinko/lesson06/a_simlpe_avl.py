@@ -1,8 +1,8 @@
 task = '''
 Оптимальное AVL-дерево поиска.
- 
+
 Заполните кодом все места, где вcтретится ключевое слово pass решая следующую задачу: 
- 
+
 Известны частоты появления ключевых слов в некоторой программе, то есть дана таблица вроде такой:
 begin 5
 do 40
@@ -60,7 +60,6 @@ class AvlA():
         def __str__(self):
             return str(self.key)
 
-
     def __init__(self, root=None):
         self.root = root  # корень
         self._outlist = list()  # вспомогательный лист в котором строится дерево для вывода его на экран
@@ -90,75 +89,61 @@ class AvlA():
             elif key < tree.key:
                 tree = tree.left
             else:
-                tree = tree.left
+                tree = tree.right
         return tree
 
     def _create(self, key, value):
         return self.Node(key, value)
 
     def _height(self, tree):
-        # высота пересчитывается только в момент обновления узла
-        return tree.height if tree else -1  # сокращённая запись
+        return tree.height if tree else -1
 
     def _add(self, tree, key, value):
+#        pass
         if not tree:
-            node = self._create(key, value)
-            self.root = node
-            return node
-
-        if key < tree.key:
-            # подвешиваем налево
+            self.root = self._create(key, value)
+            return self.root
+        if (key < tree.key):
             tree.left = self._add(tree.left, key, value)
-            # нужно нам делать вращение или нет
-            # что справа, мы не знаем. Сломано?
             if self._height(tree.left) - self._height(tree.right) == 2:
-                if key < tree.key:
-                    self._right_rotate(tree)
+                if key < tree.left.key:
+                    tree = self._right_rotate(tree)
                 else:
-                    self._leftright_rotate(tree)
-
-        elif key > tree.key:
-            # подвешиваем направо
+                    tree = self._leftright_rotate(tree)
+        elif (key > tree.key):
             tree.right = self._add(tree.right, key, value)
-            # нужно нам делать вращение или нет
-            # что слева, мы не знаем. Сломано?
             if self._height(tree.right) - self._height(tree.left) == 2:
-                if key > tree.key:
-                    self._left_rotate(tree)
+                if key > tree.right.key:
+                    tree = self._left_rotate(tree)
                 else:
-                    self._rightleft_rotate(tree)
-
+                    tree = self._rightleft_rotate(tree)
         else:
             tree.value = value
-        # print
         tree.height = max(self._height(tree.left), self._height(tree.right)) + 1
-
         return tree
 
     def _right_rotate(self, tree):
-        root = tree.left  #
+        root = tree.left
         tree.left = root.right
-        root.left = tree
-
+        root.right = tree
         tree.height = max(self._height(tree.left), self._height(tree.right)) + 1
-        root.height = max(self._height(root.left), tree.hight) + 1
+        root.height = max(self._height(root.left), tree.height) + 1
         return root
 
     def _left_rotate(self, tree):
-        root = tree.right  #
+        root = tree.right
         tree.right = root.left
-        root.right = tree  # по слайдам проверить, может так лучше root.left = tree
-
+        root.left = tree
         tree.height = max(self._height(tree.left), self._height(tree.right)) + 1
         root.height = max(self._height(root.right), tree.height) + 1
         return root
 
     def _leftright_rotate(self, tree):
-        tree.left = self._left_rotate(tree)
+        tree.left = self._left_rotate(tree.left)
         return self._right_rotate(tree)
 
     def _rightleft_rotate(self, tree):
-        tree.right = self._right_rotate(tree)
+        tree.right = self._right_rotate(tree.right)
         return self._left_rotate(tree)
 
     # обновление массива для строкового представления дерева
@@ -190,9 +175,9 @@ class AvlA():
             subspaces = " " * (len(spaces) - 1)
             while (len(line) > max):
                 line = line.replace(spaces, subspaces, 1)
-            if len(line.replace(".","").replace(" ",""))>0:
+            if len(line.replace(".", "").replace(" ", "")) > 0:
                 out += line + "\n"
-        out += "-"*max
+        out += "-" * max
         return out
 
 
@@ -201,6 +186,7 @@ def main():
     # чтение одной строки из файла
     def arr(filename):
         return filename.readline().replace("\n", "").split(" ")
+
     f = open("dataA.txt")
     count = int(arr(f)[0])
     avl = AvlA()
