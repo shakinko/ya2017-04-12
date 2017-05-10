@@ -24,10 +24,7 @@ class AvlB():
                 self.right.height if self.right else -1)
 
         def __str__(self):
-            # узел с флагом deleted = True считаем удаленным по-ленивому
-            # и на печать ключ такого узла не выводим
-            return "." if self.deleted else str(self.key)
-
+            return str(self.key)
 
     def __init__(self, root=None):
         self.root = self.copy_tree = root  # 2 корня, тот, который copy нужен для lazy deletion
@@ -57,21 +54,29 @@ class AvlB():
         if self.nodecount * 0.5 <= self.delcount:
             # создаем новое дерево, содержащее все не удалённые узлы
             self.copy(self.root)
+            # print(self.copy_tree)
+            self.root = self.copy_tree       # копия встает на место оригинала
+            self.nodecount -= self.delcount  # счетчик узлов уменьшился на кол-во удаленных узлов
+            self.copy_tree = None            # уничтожаем копию
+            self.delcount = 0
 
     def copy(self, node):
         if node:
             if not node.deleted:
                 self.copy_tree = self._add(self.copy_tree, node.key, node.value)
+                # print("key =", node.key)
 
             if node.left and not node.left.deleted:
                 self.copy_tree = self._add(self.copy_tree, node.left.key, node.left.value)
+                # print("left.key =", node.left.key)
 
             elif node.right and not node.right.deleted:
                 self.copy_tree = self._add(self.copy_tree, node.right.key, node.right.value)
+                # print("right.key =", node.right.key)
 
         # рекурсивно спускаемся по дереву и продолжаем копировать
-                self.copy(node.left)
-                self.copy(node.right)
+            self.copy(node.left)
+            self.copy(node.right)
 
     def lookup(self, key):
         return self._lookup(self.root, key)
