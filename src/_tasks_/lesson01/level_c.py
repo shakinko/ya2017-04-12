@@ -20,7 +20,7 @@ Level C. Вам Необходимо реализовать 2 задачи
 def c_01_last_digit_fibo(n):
     #ваше решение
     return None
-
+# Пизано
 
 def c_02_mod_big_fibo(n, m):
     #ваше решение
