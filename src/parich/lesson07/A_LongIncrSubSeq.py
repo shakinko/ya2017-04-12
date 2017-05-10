@@ -36,7 +36,6 @@ def getSeqSize(filename):
                 if ans < d[i]:
                     ans = d[i]
     return ans
-    # !!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
 def main():
     filename = "dataA.txt"
