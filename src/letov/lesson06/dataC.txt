@@ -1,0 +1,16 @@
+15
+begin 5
+do 40
+else 8
+end 4
+if 10
+then 10
+while 23
+len 14
+for 9
+print 15
+int 20
+float 10
+elif 3
+open 2
+close 2
