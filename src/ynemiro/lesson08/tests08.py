@@ -1,8 +1,8 @@
 import os
 from unittest import TestCase
-from .a_editdist import getDistanceEdintingA
-from .b_editdist import getDistanceEdintingB
-from .c_editdist import getDistanceEdintingC
+from a_editdist import getDistanceEdintingA
+from b_editdist import getDistanceEdintingB
+from c_editdist import getDistanceEdintingC
 
 
 #############################################################################################
