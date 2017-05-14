@@ -49,9 +49,7 @@ def getDistanceEdintingA(inpstr, outstr):
                 subdist = editDistTD(i - 1, j - 1) + cost
                 d[i][j]=min(insdist, deldist, subdist)
 
-        # for s in d:
-        #    print(s)
-        # print("------------------------")
+
         return d[i][j]
 
     a, h = inpstr, len(inpstr)

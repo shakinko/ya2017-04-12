@@ -67,7 +67,7 @@ def getDistanceEdintingC(inpstr, outstr):
 
                     # for s in d:
                     #    print(s)
-                    # print("------------------------")
+                    # print("-----------------------")
 
     res = ""
     # идем снизу из правого нижнего угла d[h][w]

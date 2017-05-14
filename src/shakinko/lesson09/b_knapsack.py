@@ -35,7 +35,7 @@ def getMaxWeightB(filename):
         for w in range(1, W + 1):
             if w - wi >= 0:
                 d[i][w] = d [i][w-1]
-                print ("i=", i, " w=", w, " wi =", wi)
+                print ("i =", i, " w =", w, " wi =", wi)
                 d[i][w] = max(d[i-1][w], d[i-1][w-wi] + ci)
             else:
                 d[i][w] = d[i-1][w]

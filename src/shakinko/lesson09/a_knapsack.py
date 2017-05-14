@@ -33,7 +33,7 @@ def getMaxWeightA(filename):
     d = [0] * (W + 1)
     assert len(item) == n
     for w in range(1, W + 1):
-        # цикл по кускам. Входит ли кусок в этот объем wi
+        # цикл по кускам.  Входит ли кусок в этот объем wi
         # с учетом того, что мы уже положили
         for i in range(0, n):
             wi = item[i]

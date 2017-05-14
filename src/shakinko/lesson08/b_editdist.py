@@ -57,7 +57,7 @@ def getDistanceEdintingB(inpstr, outstr):
 
                     # for s in d:
                     #    print(s)
-                    # print("------------------------")
+                    # print("-----------------------")
     return d[i][j]
 
 def main():
