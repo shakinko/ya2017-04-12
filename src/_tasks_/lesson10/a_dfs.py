@@ -43,8 +43,35 @@ I(6,7)
 
 
 def printGraphA(fin):
+    def explore(vertex):
+        if not vertex in visited:
+            visited.add(vertex)
+            for to in graph.get(vertex):
+                ename=sorted([to,vertex])
+                ename=str(ename[0])+str(ename[1])
+                if not ename in edges:
+                    edges.append(ename)
+                    if not to in visited:
+                        lines.append(vertex+"->"+to)
+                        explore(to)
+                    else:
+                        lines.append(to+"<-"+vertex)
+
+    def dfs(graph):
+        for vertex in sorted(graph.keys()):
+            if not vertex in visited:
+                explore(vertex)
+
     lines = []
-    pass
+    visited = set()
+    edges = []
+    graph = dict()
+    for line in fin.readlines():
+        key, value = line.replace("\n", "").split(":")
+        value = sorted(value.split(","))
+        graph.update({key: value})
+    dfs(graph)
+    # for v in graph: print(v + ":" + str(graph.get(v)))
     return lines
 
 
