@@ -126,7 +126,7 @@ class AvlA():
     def _right_rotate(self, tree):
         root = tree.left
         tree.left = root.right
-        root.left = tree
+        root.right = tree
         tree.height = max(self._height(tree.left), self._height(tree.right)) + 1
         root.height = max(self._height(root.left), tree.height) + 1
         return root
@@ -134,8 +134,8 @@ class AvlA():
     def _left_rotate(self, tree):
         root = tree.right
         tree.right = root.left
-        root.right = tree
-        tree.height = max(self._height(tree.right), self._height(tree.left)) + 1
+        root.left = tree
+        tree.height = max(self._height(tree.left), self._height(tree.right)) + 1
         root.height = max(self._height(root.right), tree.height) + 1
         return root
 
