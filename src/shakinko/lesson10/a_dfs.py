@@ -56,7 +56,7 @@ def printGraphA(fin):
             for to in graph.get(vertex):
                 # ename=sorted([to,vertex])
                 # ename=str(ename[0])+str(ename[1])
-                ename = ord(to) * ord (vertex) + ord(to) + ord (vertex)
+                ename = ord(to) * ord (vertex) + ord(to) + ord (vertex)  # не должно быть коллизий
 
 
                 if not ename in edges:
