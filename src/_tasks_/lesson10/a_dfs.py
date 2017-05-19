@@ -42,6 +42,7 @@ I(6,7)
 '''
 
 
+
 def printGraphA(fin):
     def explore(vertex):
         if not vertex in visited:
