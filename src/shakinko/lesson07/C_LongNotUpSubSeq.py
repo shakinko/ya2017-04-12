@@ -1,3 +1,6 @@
+from bisect import bisect, bisect_left
+from random import randint
+
 task = '''
 Дано:
     целое число 1<=n<=1E5 ( ОБРАТИТЕ ВНИМАНИЕ НА РАЗМЕРНОСТЬ! )
@@ -35,12 +38,59 @@ def getNotUpSeqIndexses(filename):
     # для корректной проверки рекомендуется сгенерировать тестовый файл размера 1E5
     # !!!!!!!!!!!!!!!!!!!!!!!!!     НАЧАЛО ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
-    return [0]
+    INF = int(2e10)  # будем считать это бесконечностью, т.к. на входе у нас числа < 2E9
+
+    # считываем исходный массив
+    f = open(filename)
+    n = int(f.readline().replace("\n", ""))
+    array = list(map(int, f.readline().replace("\n", "").split(" ")))
+    array.append(0)                         # когда массив перевернем, то индексация наших данных будет с 1. Очень удобно восстанавливать
+    array = list(reversed(array))           # повернем данные так, чтобы использовать уже готовые bisect, bisect_left
+    len_a = len(array)
+
+    # инициализируем массив для динамики
+    d = [INF] * len_a
+    d[0] = -INF
+
+    # ещё 2 массива нужны будут для восстановления
+    pos = [0] * len_a
+    pre = [0] * len_a
+
+    for i in range(len_a):
+        j = bisect(d, array[i])            # бинарный поиск на этот раз возьмем уже готовый, так код лаконичнее )
+        if d[j - 1] <= array[i] < d[j]:    # так как мы вначале инвертировали массив, то нам подходят возрастающие либо равные элементы
+            d[j] = array[i]                # критерий соблюдается, значит обновляем d[j]
+            pos[j] = i                     # а также обновляем массивы для восстановления
+            pre[i] = pos[j - 1]
+
+    # восстанавливаем всё в res
+    res = []
+    i = pos[bisect_left(d, INF)-1]
+    while i:
+        res.append(len_a - i)              # результирующие индексы пойдут в нужном порядке (не в инвертированном)
+        # res.append(array[i])             # debug. Выводим не индексы, а сами элементы. Так проще проконтролировать
+        i = pre[i]
+
+    print(len(res))
+    return res
     # !!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
 
 def main():
+    print ("Входные данные: dataC.txt из гита")
     filename = "dataC.txt"
+    answer = getNotUpSeqIndexses(filename)
+    for i in answer: print(i, end=" ")
+
+    print("\n\nВходные данные: сгенерированный массив из 100000 случайных элементов")
+    f = open('big_data.txt', 'w')
+    f.write('11' + '\n')
+
+    for i in range(0, 99999):
+        f.write(str(randint(1, 2E9)) + " ")
+    f.write(str(randint(1, 2E9)) + "\n")
+    f.close()
+    filename = "big_data.txt"
     answer = getNotUpSeqIndexses(filename)
     for i in answer: print(i, end=" ")
 
