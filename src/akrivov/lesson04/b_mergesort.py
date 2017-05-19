@@ -16,31 +16,44 @@ Sample Output:
 '''
 
 
-def merge(lm, lr):
-    l = 0
-    r = 0
-    res = []
-    while (l + r) < (len(lm) + len(lr)):
-        if r >= len(lr) or (l < len(lm) and lm[l] <= lr[r]):
-            res.append(lm[l])
-            l += 1
-        else:
-            res.append(lr[r])
-            r += 1
+def merge(left, right):
+    i = j = 0
+    res = list()
+
+    for k in range(0, len(left) + len(right)):
+        if (left[i] >= right[j]):
+            res.append(right[j])
+            if j < len(right) - 1:
+                j += 1
+            else:
+
+                while i < len(left):
+                    res.append(left[i])  # добавляем остаток из left
+                    i += 1
+                break
+
+        elif (left[i] < right[j]):
+            res.append(left[i])
+            if i < len(left) - 1:
+                i += 1
+            else:
+
+                while j < len(right):
+                    res.append(right[j])  # добавляем остаток из right
+                    j += 1
+                break
     return res
 
 
 def mergeSort(m):
-    # ваше решение
-    lm = []
-    lr = []
-    if len(m) > 1:
-        c = len(m) // 2
-        lm = m[:c]
-        lr = m[c:]
-        mergeSort(lm)
-        mergeSort(lr)
-    return merge(lm, lr)
+    if len(m) < 2:
+        return m
+
+    c = len(m) // 2
+    # разделим по возможности поровну (+/- 1)
+    left = mergeSort(m[:c])
+    right = mergeSort(m[c:])
+    return merge(left, right)
 
 
 def main():
@@ -53,7 +66,7 @@ def main():
 
     print(" array=", array)
     sort = mergeSort(array)
-    print(" sort=", sort)
+    print(" sort =", sort)
 
 
 # Для ручной проверки нажмите Ctrl+Shift+F10
