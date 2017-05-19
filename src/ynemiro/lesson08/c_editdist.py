@@ -37,8 +37,8 @@ def getDistanceEdintingC(inpstr, outstr):
     a, h = inpstr, len(inpstr)
     b, w = outstr, len(outstr)
     d = [[-1] * (w + 1) for i in range(h + 1)]
-    for i in range(0, h +1):
-        for j in range(0, w+1):
+    for i in range(0, h + 1):
+        for j in range(0, w + 1):
             if d[i][j] == -1:
                 if i == 0:
                     d[i][j] = j
@@ -53,27 +53,28 @@ def getDistanceEdintingC(inpstr, outstr):
                     subdist = d[i - 1][j - 1] + cost
                     d[i][j] = min(insdist, deldist, subdist)
     res = ""
-    i,j=h,w
-    while i>0 or j>0:
-        if d[i][j-1]==d[i][j] - 1:
+    i, j = h, w
+
+    while i > 0 or j > 0:
+        if d[i][j - 1] == d[i][j] - 1:
             op = "+"
-            sym = b[j -1]
+            sym = b[j - 1]
             res = op + sym + "," + res
             j = j - 1
-        elif  d[i - 1][j]==d[i][j] - 1:
+        elif d[i - 1][j] == d[i][j] - 1:
             op = "-"
-            sym = a[i -1]
+            sym = a[i - 1]
             res = op + sym + "," + res
             i = i - 1
-        elif  d[i-1][j-1]==d[i][j] - 1:
+        elif d[i - 1][j - 1] == d[i][j] - 1:
             op = "~"
-            sym = b[j -1]
+            sym = b[j - 1]
             res = op + sym + "," + res
-            i, j = i -1, j - 1
+            i, j = i - 1, j - 1
         else:
             op = "#"
-            res = op +","+res
-            i, j = i -1, j - 1
+            res = op + "," + res
+            i, j = i - 1, j - 1
     return res
 
 
