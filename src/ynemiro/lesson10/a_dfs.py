@@ -45,6 +45,7 @@ I(6,7)
 def printGraphA(fin):
     def explorer(vertex):
         if not vertex in visited:
+
             visited.add(vertex)
             for to in graph.get(vertex):
                 ename = sorted([to, vertex])
