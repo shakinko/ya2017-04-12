@@ -11,7 +11,27 @@ task = '''
 
 def countSort(inarray):
     # тут реализуйте логику задачи с применением сортировки подсчетом
-    pass
+    min_item = max_item = 0
+    for i in range(0, len(inarray)):
+        if inarray[i] < min_item: min_item = inarray[i]
+        if inarray[i] > max_item: max_item = inarray[i]
+
+    if min_item < 0:
+        shift = - min_item
+    else:
+        shift = 0
+
+    M = max_item + shift + 1
+    B = [0] * M
+    for j in inarray:
+        B[j + shift] += 1
+
+    j = 0
+    for item in range(M):
+        for i in range(B[item]):
+            inarray[j] = item - shift
+            j += 1
+    return inarray
     # !!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
 
