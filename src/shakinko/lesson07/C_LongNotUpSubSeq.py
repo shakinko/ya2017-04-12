@@ -41,25 +41,22 @@ def getNotUpSeqIndexses(filename):
     INF = int(2e10)  # будем считать это бесконечностью, т.к. на входе у нас числа < 2E9
 
     # считываем исходный массив
-    f = open(filename)
-    n = int(f.readline().replace("\n", ""))
-    array = list(map(int, f.readline().replace("\n", "").split(" ")))
+    s = open(filename).readlines()
+    array = list(map(int, s[1].replace("\n", "").split(" ")))  # перепрыгиваем через 1-ю строку, читаем сразу 2-ю
     array.append(0)                         # когда массив перевернем, то индексация наших данных будет с 1. Очень удобно восстанавливать
     array = list(reversed(array))           # повернем данные так, чтобы использовать уже готовые bisect, bisect_left
     len_a = len(array)
 
     # инициализируем массив для динамики
-    d = [INF] * len_a
-    d[0] = -INF
+    d = [-INF] + [INF] * len_a
 
-    # ещё 2 массива нужны будут для восстановления
-    pos = [0] * len_a
-    pre = [0] * len_a
+    # ещё 2 массива нужны будут для восстановления, проинициализируем их нулями
+    pos, pre = [0] * len_a, [0] * len_a
 
     for i in range(len_a):
         j = bisect(d, array[i])            # бинарный поиск на этот раз возьмем уже готовый, так код лаконичнее )
-        if d[j - 1] <= array[i] < d[j]:    # так как мы вначале инвертировали массив, то нам подходят возрастающие либо равные элементы
-            d[j] = array[i]                # критерий соблюдается, значит обновляем d[j]
+        if d[j - 1] <= array[i] < d[j]:    # мы развернули исходный массив, значит сейчас работаем с неубывающими элементами
+            d[j] = array[i]                # критерий соблюдается, обновляем d[j]
             pos[j] = i                     # а также обновляем массивы для восстановления
             pre[i] = pos[j - 1]
 
@@ -84,7 +81,7 @@ def main():
 
     print("\n\nВходные данные: сгенерированный массив из 100000 случайных элементов")
     f = open('big_data.txt', 'w')
-    f.write('11' + '\n')
+    f.write('100000' + '\n')
 
     for i in range(0, 99999):
         f.write(str(randint(1, 2E9)) + " ")
@@ -93,6 +90,7 @@ def main():
     filename = "big_data.txt"
     answer = getNotUpSeqIndexses(filename)
     for i in answer: print(i, end=" ")
+
 
 
 # Для ручной проверки нажмите Ctrl+Shift+F10
