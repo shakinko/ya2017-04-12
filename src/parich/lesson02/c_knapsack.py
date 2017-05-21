@@ -24,8 +24,16 @@ class Item:
 
 
 def calcMaxCost(items, W):
-    # приведите ваше решение здесь
-    return None
+    res = 0
+    items.sort(key=lambda item: -item.cost / item.weight)
+    for item in items:
+        if item.weight < W:
+            res += item.cost
+            W = W - item.weight
+        else:
+            res += (item.cost * W) / item.weight
+            break
+    return res
 
 
 
