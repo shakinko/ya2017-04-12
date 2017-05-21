@@ -42,7 +42,7 @@ def print_bfs_a(fin):
         q=queue.Queue()
         q.put(start)
         while not q.empty():
-            # u это откуда. u обновлённая, v неизвестная = inf
+            # u это откуда. u это обновлённая, v неизвестная = inf
             u=q.get()
             for v in graph.get(u):
                 #

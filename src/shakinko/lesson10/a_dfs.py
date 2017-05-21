@@ -42,7 +42,6 @@ I(6,7)
 '''
 
 
-
 def printGraphA(fin):
     def explore(vertex):
         nonlocal clo
@@ -54,17 +53,13 @@ def printGraphA(fin):
 
             visited.add(vertex)
             for to in graph.get(vertex):
-                # ename=sorted([to,vertex])
-                # ename=str(ename[0])+str(ename[1])
-                ename = ord(to) * ord (vertex) + ord(to) + ord (vertex)  # не должно быть коллизий
+                ename = ord(to) * ord(vertex)  # наши вершины обозначены A..Z и даже при простом перемножении не дадут коллизий
+                                               # для более сложных графов генерировать ключ надо будет по более сложной формуле
 
-
-                if not ename in edges:
+                if ename not in edges:
                     edges.append(ename)
 
-
-
-                    if not to in visited:
+                    if to not in visited:
                         lines.append(vertex+"->"+to)
                         explore(to)
                     else:
@@ -73,10 +68,9 @@ def printGraphA(fin):
         post.update({vertex: clo})
         clo += 1
 
-
     def dfs(graph):
         for vertex in sorted(graph.keys()):
-            if not vertex in visited:
+            if vertex not in visited:
                 explore(vertex)
 
     lines = []
@@ -92,14 +86,12 @@ def printGraphA(fin):
         key, value = line.replace("\n", "").split(":")
         value = sorted(value.split(","))
         graph.update({key: value})
-        pre.update({key: 0})
-        post.update({key: 0})
-
+        # pre.update({key: 0})
+        # post.update({key: 0})
 
 
     dfs(graph)
     # for v in graph: print(v + ":" + str(graph.get(v)))
-
 
     for vertex in sorted(graph.keys()):     # работает и без sorted
         lines.append(vertex + "(" + str(pre.get(vertex)) + "," + str(post.get(vertex)) + ")")
