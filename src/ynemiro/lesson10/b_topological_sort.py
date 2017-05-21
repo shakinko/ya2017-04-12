@@ -45,6 +45,7 @@ def printGraphB(fin):
             if graph.get(vertex)[0] != '':
                 for to in graph.get(vertex):
                     explorer(to, count)
+
                 t = dist.get(vertex)
                 t.append(count[0])
                 dist.update({vertex: t})
@@ -67,10 +68,9 @@ def printGraphB(fin):
             explorer(vertex, count)
 
     for l in st:
-        lines.append(l + "(" + str(dist.get(l)).replace("[", "") .replace("]", "").replace(" ", "") + ")")
+        lines.append(l + "(" + str(dist.get(l)).replace("[", "").replace("]", "").replace(" ", "") + ")")
 
     return lines
-
 
 
 def main():

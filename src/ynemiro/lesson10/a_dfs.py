@@ -82,7 +82,7 @@ def printGraphA(fin):
             explorer(vertex, count)
 
     for l in sorted(dist.keys()):
-        lines.append(l + "(" + str(dist.get(l)).replace("[", "") .replace("]", "").replace(" ", "") + ")")
+        lines.append(l + "(" + str(dist.get(l)).replace("[", "").replace("]", "").replace(" ", "") + ")")
 
     return lines
 
