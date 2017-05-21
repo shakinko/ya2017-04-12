@@ -43,7 +43,7 @@ def print_bfs_a(fin):
         q.put(start)
         while not q.empty():
             # u это откуда. u это обновлённая, v неизвестная = inf
-            u=q.get()
+            u = q.get()
             for v in graph.get(u):
                 #
                 if dist.get(v) == math.inf:

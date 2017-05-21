@@ -51,7 +51,6 @@ def printGraphB(fin):
         for vertex in sorted(graph.keys()):  # yfgh
             if vertex not in visited:
                 explore(vertex)
-
     clo = 0
     sort_lines = []
     visited = set()

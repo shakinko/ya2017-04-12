@@ -86,8 +86,6 @@ def printGraphA(fin):
         key, value = line.replace("\n", "").split(":")
         value = sorted(value.split(","))
         graph.update({key: value})
-        # pre.update({key: 0})
-        # post.update({key: 0})
 
 
     dfs(graph)
