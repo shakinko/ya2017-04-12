@@ -16,11 +16,31 @@ Sample Output:
 '''
 
 
+def merge(lm, lr):
+    l = 0
+    r = 0
+    res = []
+    while (l + r) < (len(lm) + len(lr)):
+        if r >= len(lr) or (l < len(lm) and lm[l] <= lr[r]):
+            res.append(lm[l])
+            l += 1
+        else:
+            res.append(lr[r])
+            r += 1
+    return res
+
+
 def mergeSort(m):
     # ваше решение
-
-
-    return
+    lm = []
+    lr = []
+    if len(m) > 1:
+        c = len(m) // 2
+        lm = m[:c]
+        lr = m[c:]
+        mergeSort(lm)
+        mergeSort(lr)
+    return merge(lm, lr)
 
 
 def main():
@@ -29,10 +49,10 @@ def main():
     size = int(f.readline().replace("\n", ""))
     strings = f.readline().replace("\n", "").split(" ")
     array = list(map(int, strings))
-    assert size==len(array)
+    assert size == len(array)
 
     print(" array=", array)
-    sort=mergeSort(array)
+    sort = mergeSort(array)
     print(" sort=", sort)
 
 

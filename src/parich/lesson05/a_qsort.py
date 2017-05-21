@@ -41,14 +41,32 @@ Event = collections.namedtuple("Event", {"time": 0, "cams": 0}, rename=True)
 
 
 def my_qsort(a):
-    pass
+    a.sort()
+    return sorted(a)
 
 
 def fill_events_from_cams(cams, events):
-    # тут напишите ваше решение,
-    # для сортировки разрешается использовать только свой метод my_qsort
-    # events - нужно обновить (т.е. функция ничего не возвращает по return)
-    pass
+    Point = collections.namedtuple("Point", {"time": 0, "type": 0})
+    points = list()
+    for cam in cams:
+        points.append(Point(time=cam.start, type=-1))
+        points.append(Point(time=cam.stop, type=1))
+    for event in events:
+        points.append(Point(time=event.time, type=0))
+    points.sort(key=lambda x: (x.time, x.type))
+    print(points)
+    onCam = 0
+    d = dict()
+    for p in points:
+        if p.type == 0:
+            d.update({p.time: onCam})
+        else:
+            onCam -= p.type
+    print(d)
+    for i in range(0, len(events)):
+        t = events[i].time
+        onCam = d.get(t)
+        events[i] = Event(time=t, cams=onCam)
     # !!!!!!!!!!!!!!!!!!!!!!!!!     КОНЕЦ ЗАДАЧИ     !!!!!!!!!!!!!!!!!!!!!!!!!
 
 

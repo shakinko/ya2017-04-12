@@ -38,11 +38,22 @@ task='''
 
 def decode(filename):
     f = open(filename)
-    count,lenght = map(int, f.readline().replace("\n","").split(" "))
+    count, lenght = map(int, f.readline().replace("\n", "").split(" "))
+    d = dict()
     for i in range(0, count):
-        
-
-    return
+        ch, code = f.readline().replace("\n", "").split(": ")
+        d.update({code: ch})
+    s = f.readline().replace("\n", "")
+    buff = ""
+    res = ""
+    for symbol in s:
+        buff = buff + symbol
+        ch = d.get(buff)
+        if ch:
+            res = res + ch
+            buff = ""
+    f.close()
+    return res
 
 def main():
     res = decode("encodeHuffman.txt")
