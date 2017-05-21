@@ -29,8 +29,48 @@ B(14,15)
 
 def printGraphB(fin):
     lines = []
-    pass
+    graph = dict()
+    visited = set()
+    dist = dict()
+    count = [0]
+    st = []
+
+    def explorer(vertex, count):
+        if not vertex in visited:
+            c = list()
+            c.append(count[0])
+            dist.update({vertex: c})
+            visited.add(vertex)
+            count[0] += 1
+            if graph.get(vertex)[0] != '':
+                for to in graph.get(vertex):
+                    explorer(to, count)
+                t = dist.get(vertex)
+                t.append(count[0])
+                dist.update({vertex: t})
+                count[0] += 1
+                st.append(vertex)
+            else:
+                t = dist.get(vertex)
+                t.append(count[0])
+                dist.update({vertex: t})
+                count[0] += 1
+                st.append(vertex)
+
+    for line in fin.readlines():
+        key, value = line.replace("\n", "").split(":")
+        value = sorted(value.split(","))
+        graph.update({key: value})
+
+    for vertex in sorted(graph.keys()):
+        if not vertex in visited:
+            explorer(vertex, count)
+
+    for l in st:
+        lines.append(l + "(" + str(dist.get(l)).replace("[", "") .replace("]", "").replace(" ", "") + ")")
+
     return lines
+
 
 
 def main():

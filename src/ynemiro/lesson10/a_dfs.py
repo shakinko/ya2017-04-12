@@ -43,10 +43,20 @@ I(6,7)
 
 
 def printGraphA(fin):
-    def explorer(vertex):
-        if not vertex in visited:
+    edges = list()
+    lines = []
+    graph = dict()
+    visited = set()
+    dist = dict()
+    count = [0]
 
+    def explorer(vertex, count):
+        if not vertex in visited:
+            c = list()
+            c.append(count[0])
+            dist.update({vertex: c})
             visited.add(vertex)
+            count[0] += 1
             for to in graph.get(vertex):
                 ename = sorted([to, vertex])
                 ename = str(ename[0]) + str(ename[1])
@@ -54,25 +64,26 @@ def printGraphA(fin):
                     edges.append(ename)
                     if not to in visited:
                         lines.append(vertex + "->" + to)
-                        explorer(to)
+                        explorer(to, count)
                     else:
                         lines.append(to + "<-" + vertex)
-
-    def dfs(graph):
-        for vertex in sorted(graph.keys()):
-            if not vertex in visited:
-                explorer(vertex)
-
-    edges = list()
-    lines = []
-    graph = dict()
-    visited = set()
+            t = dist.get(vertex)
+            t.append(count[0])
+            dist.update({vertex: t})
+            count[0] += 1
 
     for line in fin.readlines():
         key, value = line.replace("\n", "").split(":")
         value = sorted(value.split(","))
         graph.update({key: value})
-    dfs(graph)
+
+    for vertex in sorted(graph.keys()):
+        if not vertex in visited:
+            explorer(vertex, count)
+
+    for l in sorted(dist.keys()):
+        lines.append(l + "(" + str(dist.get(l)).replace("[", "") .replace("]", "").replace(" ", "") + ")")
+
     return lines
 
 
