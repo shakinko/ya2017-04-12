@@ -33,7 +33,36 @@ I=3
 '''
 
 def print_bfs_a(fin):
+    def bfs(graph, start):
+        dist = dict()
+
+        for vertex in graph:
+            dist.update({vertex: math.inf if not vertex == start else 0})
+        q = queue.Queue()
+        q.put(start)
+        while not q.empty():
+            u = q.get()
+            for v in graph.get(u):
+                if dist.get(v) == math.inf:
+                    dist.update({v: (dist.get(u) + 1)})
+                    q.put(v)
+        return dist
+
+
+
+    start = fin.readline().replace("\n", "")
+
+    graph = dict()
+    for line in fin.readlines():
+        key, value = line.replace("\n", "").split(":")
+        value = list(value.split(","))
+        graph.update({key: value})
+
+    dist = bfs(graph, start)
     lines = []
+    for vertex in dist:
+        lines.append(vertex + "=" + str(dist.get(vertex)))
+
     # метод должен вернуть массив строк (для вывода в консоль)
     return lines
 

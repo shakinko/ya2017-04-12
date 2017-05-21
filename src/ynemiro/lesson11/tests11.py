@@ -5,8 +5,8 @@ from unittest import TestCase
 #############################################################################################
 #   Для тестов нажмите Ctrl+Shift+F10 установив курсор на  Run (или создайте конфигурацию)  #
 #############################################################################################
-from .a_bfs import print_bfs_a
-from .b_dijkstra import print_b_dijkstra
+from a_bfs import print_bfs_a
+from b_dijkstra import print_b_dijkstra
 
 
 class Run(TestCase):
