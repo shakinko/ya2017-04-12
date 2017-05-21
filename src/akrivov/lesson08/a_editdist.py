@@ -31,7 +31,33 @@ task = '''
 
 
 def getDistanceEdintingA(inpstr, outstr):
-    pass
+    def editDistTD(i, j):
+        if d[i][j] == -1:
+            # тогда надо считать
+            # i=0 это самая верхняя строчка
+            if i == 0:
+                d[i][j] = j
+            elif j == 0:
+                d[i][j] = i
+            else:
+                # вставка, значит мы пришли слева
+                insdist = editDistTD(i, j - 1) + 1
+                deldist = editDistTD(i - 1, j) + 1
+                char_a = a[i - 1]
+                char_b = b[j - 1]
+                cost = 0 if char_a == char_b else 1
+                subdist = editDistTD(i - 1, j - 1) + cost
+                d[i][j]=min(insdist, deldist, subdist)
+
+
+        return d[i][j]
+
+    a, h = inpstr, len(inpstr)
+    b, w = outstr, len(outstr)
+    d = [[-1] * (w + 1) for i in range(h + 1)]
+    # идём рекурсивно
+    res = editDistTD(h, w)
+    return res
 
 
 def main():
