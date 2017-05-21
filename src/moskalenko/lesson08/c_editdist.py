@@ -59,27 +59,27 @@ def getDistanceEdintingC(inpstr, outstr):
                     cost = 0 if char_a == char_b else 1
                     subdist = d[i - 1][j - 1] + cost
                     d[i][j] = min(insdist, deldist, subdist)
-    res = d[h][w]
+    res = ""
     i, j = h, w
     while i > 0 or j > 0:
-        if d[i][j-1] == d[i][j] - 1:
+        if d[i][j - 1] == d[i][j] - 1:
             op = "+"
             sym = b[j - 1]
-            res = op + sym + "," + str(res)
+            res = op + sym + "," + res
             j = j - 1
-        elif d[i-1][j] == d[i][j] - 1:
+        elif d[i - 1][j] == d[i][j] - 1:
             op = "-"
             sym = a[i - 1]
-            res = op + sym + "," + str(res)
+            res = op + sym + "," + res
             i = i - 1
-        elif d[i-1][j - 1] == d[i][j] - 1:
+        elif d[i - 1][j - 1] == d[i][j] - 1:
             op = "~"
             sym = b[j - 1]
-            res = op + sym + "," + str(res)
+            res = op + sym + "," + res
             i, j = i - 1, j - 1
         else:
             op = "#"
-            res = op + "," + str(res)
+            res = op + "," + res
             i, j = i - 1, j - 1
     return res
 
