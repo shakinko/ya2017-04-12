@@ -17,28 +17,43 @@ Sample Output:
 
 
 def merge(left, right):
-    i = 0
-    j = 0
+    i = j = 0
     res = list()
 
-    for k in range(0, (len(left) + len(right)) - 1):
-        if left[i] > right[j]:
+    for k in range(0, len(left) + len(right)):
+        if (left[i] >= right[j]):
             res.append(right[j])
-            j+=1
-        else:
+            if j < len(right) - 1:
+                j += 1
+            else:
+
+                while i < len(left):
+                    res.append(left[i])  # добавляем остаток из left
+                    i += 1
+                break
+
+        elif (left[i] < right[j]):
             res.append(left[i])
-            i+=1
+            if i < len(left) - 1:
+                i += 1
+            else:
+
+                while j < len(right):
+                    res.append(right[j])  # добавляем остаток из right
+                    j += 1
+                break
     return res
 
-# def mergeSort(m):
-#     # ваше решение
-#     if (len(m)<2):
-#         return m
-#     c=len(m)//2
-#     left=mergeSort(m[:c])
-#     right=mergeSort(m[c:])
-#     return merge(left,right)
 
+def mergeSort(m):
+    if len(m) < 2:
+        return m
+
+    c = len(m) // 2
+    # разделим по возможности поровну (+/- 1)
+    left = mergeSort(m[:c])
+    right = mergeSort(m[c:])
+    return merge(left, right)
 
 
 def main():
@@ -47,11 +62,11 @@ def main():
     size = int(f.readline().replace("\n", ""))
     strings = f.readline().replace("\n", "").split(" ")
     array = list(map(int, strings))
-    assert size==len(array)
+    assert size == len(array)
 
     print(" array=", array)
-    sort=mergeSort(array)
-    print(" sort=", sort)
+    sort = mergeSort(array)
+    print(" sort =", sort)
 
 
 # Для ручной проверки нажмите Ctrl+Shift+F10
