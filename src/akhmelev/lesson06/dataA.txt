@@ -1,8 +1,0 @@
-7
-begin 5
-do 40
-else 8
-end 4
-if 10
-then 10
-while 23
