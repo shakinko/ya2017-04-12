@@ -1,6 +1,7 @@
 import heapq
 import math
 
+
 task = '''
 Оптимальное прохождение карты. 
 
@@ -57,6 +58,7 @@ def setDist(arr, vertex, value):
 
 # очередь, выделена в отдельный
 # класс для удобного использования
+# Элемент heap[0] всегда содержит наименьший элемент
 
 class Heap():
     def __init__(self) -> None:
@@ -79,8 +81,52 @@ class Heap():
 
 
 def print_b_dijkstra(fin):
+    def bfs_dijkstra(fin, start):
+        dist = dict()
+
+        for vertex in graph:
+            dist.update({vertex: Dist(vertex, math.inf if not vertex == start else 0)})
+            print(dist.get(vertex))  # debug
+
+        q = Heap()
+        q.push(start)
+
+        ### вот здесь я пока остановился. Нужно научиться извлекать l(u, v)
+        ### и нарисовать на листочке, что кладем в очередь, что в dist
+        while q.size() > 0:
+            # u это откуда, она уже обновлена, v неизвестная = inf
+            u = q.pop()
+            # for v in graph.get(u):
+            #     if dist.get(v) > dist.get(u) + ??:  # если dist[v] > dist[u] + l(u, v):
+            #         dist.update({v:dist.get(u)+1})  # dist[v] <-- dist[u] + l(u, v)  # обновлённое значение
+            #         q.put(v)                        # prev[v] <-- u
+            #                                         # DecreaseKey(H, v, dist[v])
+
+        return dist
+
+    start = fin.readline().replace("\n", "")
+    pre, graph = {}, {}
+    Q = Heap()
+
+    # длины рёбер будем хранить в Dist()
+    for line in fin.readlines():
+        key, value = line.replace("\n", "").split(":")
+
+        if value:   # если value не пустое
+            a = [Dist(s.split("=")[0], s.split("=")[1]) for s in value.split(",")]  # split внутри split
+            graph.update({key: a})
+            print(",".join(map(str, graph.get(key))))                               # debug. Печатает B=1,E=4,F=8
+        print ("------------------")
+
+
+    for v in graph:
+        print(v + ":" + ",".join(map(str, graph.get(v))) if graph.get(v) else "")
+
+
+    dist = bfs_dijkstra(graph, start)
     lines = []
     # метод должен вернуть массив строк (для вывода в консоль)
+
     return lines
 
 def main():
