@@ -49,12 +49,12 @@ class Dist:
 
 def getDist(arr, vertex):
     for d in arr:
-        if vertex == d.vertex:
+        if vertex.vertex == d.vertex:
             return d.distance
 
 def setDist(arr, vertex, value):
     for d in arr:
-        if vertex == d.vertex:
+        if vertex.vertex == d.vertex:
             d.distance=value
 
 # очередь, выделена в отдельный
@@ -81,24 +81,8 @@ class Heap():
 
 
 def print_b_dijkstra(fin):
-    def bfs_dijkstra(fin, start):
-        dist = []
-        for vertex in graph:
-            dist.append(Dist(vertex, INF if not vertex == start else 0))  # наш результат поначалу = 0, INF, ...
-
-        q = Heap()
-        q.push(Dist(start, 0))             # start поначалу это просто строка, а нам нужен Dist
-
-        while q.size() > 0:
-            u = q.pop()                    # u это откуда, она уже обновлена, v неизвестная = inf
-            for v in graph.get(u.vertex):  # v это теперь Dist число там l(u, v) . В задаче А это были просто вершины
-                if getDist(dist, u.vertex) + v.distance < getDist(dist, v.vertex):
-                    setDist(dist, v.vertex, getDist(dist, u.vertex) + v.distance)  # dist[v] <-- dist[u] + l(u, v)  # обновлённое значение
-                    q.push(v)
-        return dist
-
-    start = fin.readline().replace("\n", "")
     graph = {}
+    start = fin.readline().replace("\n", "")
 
     for line in fin.readlines():
         key, value = line.replace("\n", "").split(":")  # хороший пример использования split
@@ -107,22 +91,27 @@ def print_b_dijkstra(fin):
         d = [Dist(*s.split("=")) for s in value.split(",")] if value else []  # * распаковывает коллекцию и передает ее элементы в функцию.
         graph.update({key: d})
 
-
+    dist = []
+    q = Heap()
+    q.push(Dist(start, 0))
     for v in graph:
-        print(v + ":" + ",".join(map(str, graph.get(v))) if graph.get(v) else "")
+        # print(v + ":" + (",".join(map(str, graph.get(v))) if graph.get(v) else ""))
+        dist.append(Dist(v, INF if not v == start else 0))       # наш результат поначалу = 0, INF, ...
 
-    dist = bfs_dijkstra(graph, start)
-    lines = []
-    # метод должен вернуть массив строк (для вывода в консоль)
-    for d in dist: lines.append(str(d))
+    while q.size() > 0:
+        u = q.pop()                                              # u это откуда, она уже обновлена, v неизвестная = inf
+        for v in graph.get(u.vertex):                            # v это теперь Dist число там l(u, v) . В задаче А это были просто вершины
+            if getDist(dist, u) + v.distance < getDist(dist, v):
+                setDist(dist, v, getDist(dist, u) + v.distance)  # dist[v] <-- dist[u] + l(u, v)  # обновлённое значение
+                q.push(v)
 
-    return lines
+    return [str(d) for d in dist]                                # метод должен вернуть массив строк (для вывода в консоль)
+
 
 def main():
     f = open("dataB.txt")
     lines = print_b_dijkstra(f)
     for line in lines: print(line)
-
 
 # Для ручной проверки нажмите Ctrl+Shift+F10
 # установив курсор на  main
