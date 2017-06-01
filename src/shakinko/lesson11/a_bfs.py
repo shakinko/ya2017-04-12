@@ -45,16 +45,15 @@ def print_bfs_a(fin):
             # u это откуда. u это обновлённая, v неизвестная = inf
             u = q.get()
             for v in graph.get(u):
-                #
                 if dist.get(v) == math.inf:
                     dist.update({v:dist.get(u)+1})
                     q.put(v)
 
-        print (dist)
+
+        print(dist)
         return dist
 
     start = fin.readline().replace("\n", "")
-    lines = []
     graph = dict()
 
     for line in fin.readlines():

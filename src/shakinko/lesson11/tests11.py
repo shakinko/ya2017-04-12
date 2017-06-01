@@ -57,4 +57,4 @@ class Run(TestCase):
             # Тут будет проверка вручную. Когда решите замените 1 на 2.
 
     def test_C(self):
-        self.assertEqual(1, 2)
+        self.assertEqual(2, 2)

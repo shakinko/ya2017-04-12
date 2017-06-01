@@ -101,6 +101,8 @@ def print_b_dijkstra(fin):
     while q.size() > 0:
         u = q.pop()                                              # u это откуда, она уже обновлена, v неизвестная = inf
         for v in graph.get(u.vertex):                            # v это теперь Dist число там l(u, v) . В задаче А это были просто вершины
+
+
             if getDist(dist, u) + v.distance < getDist(dist, v):
                 setDist(dist, v, getDist(dist, u) + v.distance)  # dist[v] <-- dist[u] + l(u, v)  # обновлённое значение
                 q.push(v)

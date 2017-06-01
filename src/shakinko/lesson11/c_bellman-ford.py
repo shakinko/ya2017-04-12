@@ -1,3 +1,5 @@
+import math
+
 task = '''
 
 Финансовые балансы. 
@@ -15,12 +17,22 @@ task = '''
 Тут будет проверка вручную.
 '''
 
-
 def print_c_bellman_ford(fin):
-    lines = []
-    # метод должен вернуть массив строк (для вывода в консоль)
-    return lines
+    W, F = {}, {}
+    start = fin.readline().replace("\n", "")
 
+    for line in fin.readlines():
+        key, value = line.split(":")
+        for i in [s.split("=") for s in value.split(",")]:
+            W.update({(key, i[0]): int(i[1])})
+            F[key], F[i[0]] = [math.inf if i[0] != start else 0] * 2  # все уникальные вершины, где бы они ни нашлись
+
+    for k in range(1, len(F)):
+        for j, i in W.keys():
+            if F[j] + W[j, i] < F[i]:
+                F[i] = F[j] + W[j, i]
+
+    return [d + "=" + str(F[d]) for d in sorted(F.keys())]   # метод должен вернуть массив строк (для вывода в консоль)
 
 def main():
     f = open("dataC.txt")
